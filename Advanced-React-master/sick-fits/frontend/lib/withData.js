@@ -4,6 +4,7 @@ import { getDataFromTree } from '@apollo/client/react/ssr';
 import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
 import { endpoint, prodEndpoint } from '../config';
+import paginationField from './paginationField';
 
 function createClient({ headers, initialState }) {
   return new ApolloClient({
@@ -25,6 +26,7 @@ function createClient({ headers, initialState }) {
         uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
         fetchOptions: {
           credentials: 'include',
+          mode: 'no-cors'
         },
         // pass the headers along from this request. This enables SSR with logged in state
         headers,
@@ -35,7 +37,7 @@ function createClient({ headers, initialState }) {
         Query: {
           fields: {
             // TODO: We will add this together!
-            // allProducts: paginationField(),
+            allProducts: paginationField(),
           },
         },
       },
